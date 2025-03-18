@@ -1,6 +1,6 @@
 # C1D PAPA32 Air-Sea Fluxes
 
-`DOI:XXX.XXXX`
+[![DOI](https://zenodo.org/badge/DOI/10.5281/zenodo.15045198.svg)](https://doi.org/10.5281/zenodo.15045198)
 
 ## Context and Motivation
 
