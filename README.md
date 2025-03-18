@@ -8,7 +8,7 @@ Purpose of this experiment is to perform the 1D column [C1D_PAPA](https://doi.or
 
 
 #### Variations
-- **W25** `IN PROGRESS` : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://github.com/jiarong-wu/mlflux).
+- **W25** : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://github.com/jiarong-wu/mlflux).
 
 ## Requirements
 
