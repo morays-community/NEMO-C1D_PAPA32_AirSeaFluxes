@@ -17,7 +17,7 @@ from mlflux.ann_case import open_case
 # ============================= #
 # -- User Defined Parameters --
 # ============================= #
-weight_path = '/lustre/fswork/projects/rech/cli/udp79td/local_libs/morays/NEMO-C1D_PAPA32/C1D_PAPA32.W25ANN/INFERENCES/weights'
+weight_path = '/lustre/fswork/projects/rech/cli/udp79td/local_libs/morays/NEMO-C1D_PAPA32_AirSeaFluxes/C1D_PAPA32_AirSeaFluxes.W25/INFERENCES/weights'
 
 
 # ++++++++++++++++++++++++++++ #

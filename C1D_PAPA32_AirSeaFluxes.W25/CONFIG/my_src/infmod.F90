@@ -205,8 +205,8 @@ CONTAINS
       ! Wind speed
       infsnd(jps_ux)%z3(:,:,ssnd(ntypinf,jps_ux)%nlvl) = wndx(:,:)
       infsnd(jps_uy)%z3(:,:,ssnd(ntypinf,jps_uy)%nlvl) = wndy(:,:)
-      ! Air temperature
-      infsnd(jps_tair)%z3(:,:,ssnd(ntypinf,jps_tair)%nlvl) = tair(:,:)
+      ! Air temperature - convert in Celsius
+      infsnd(jps_tair)%z3(:,:,ssnd(ntypinf,jps_tair)%nlvl) = tair(:,:) - 273.15_wp
       ! Ocean temperature
       infsnd(jps_toce)%z3(:,:,ssnd(ntypinf,jps_toce)%nlvl) = sst(:,:)
       ! Specific humidity
