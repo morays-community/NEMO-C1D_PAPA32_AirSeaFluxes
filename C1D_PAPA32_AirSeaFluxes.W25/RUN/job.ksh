@@ -76,3 +76,7 @@ echo ${NPROC_NEMO}-$((NPROC_NEMO + NPROC_PYTHON - 1)) python3 ./main.py >> run_f
 
 # run coupled NEMO-Python
 time srun --multi-prog ./run_file
+
+# run post-process
+python3 ./plots_res.py
+python3 ./plots_diff.py
