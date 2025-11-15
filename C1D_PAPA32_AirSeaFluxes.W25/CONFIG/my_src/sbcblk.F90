@@ -41,8 +41,7 @@ MODULE sbcblk
    USE sbcdcy         ! surface boundary condition: diurnal cycle
    USE sbcwave , ONLY :   cdn_wave ! wave module
    USE lib_fortran    ! to use key_nosignedzero and glob_sum
-   USE inffld         ! Fields from inference module
-   USE infmod         ! inference module
+   USE pyfld         ! Fields from inference module
    !
 #if defined key_si3
    USE sbc_ice        ! Surface boundary condition: ice fields #LB? ok to be in 'key_si3' ???
@@ -818,7 +817,7 @@ CONTAINS
             &               pEvap=pevp(:,:), pfact_evap=rn_efac )
 
          ! Compute Air Sea Flux from Python model
-         CALL inferences( kt, pwndi, pwndj, ptair, pst, pssq, pslp )
+         CALL inferences( kt, pwndi, pwndj, ptair - 273.15_wp, pst, pssq, pslp )
 
          ! Overwrite luxes with results from Python model
          psen(:,:) = ext_qs(:,:) * tmask(:,:,1)
