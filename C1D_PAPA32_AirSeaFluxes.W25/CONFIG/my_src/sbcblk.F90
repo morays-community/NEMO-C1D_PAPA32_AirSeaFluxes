@@ -817,7 +817,7 @@ CONTAINS
             &               pEvap=pevp(:,:), pfact_evap=rn_efac )
 
          ! Compute Air Sea Flux from Python model
-         CALL inferences( kt, pwndi, pwndj, ptair - 273.15_wp, pst, pssq, pslp )
+         CALL inferences( kt, pwndi, pwndj, ptair - 273.15_wp, pst, pqair, pslp )
 
          ! Overwrite luxes with results from Python model
          psen(:,:) = ext_qs(:,:) * tmask(:,:,1)
