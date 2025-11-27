@@ -8,7 +8,7 @@ Purpose of this experiment is to perform the 1D column [C1D_PAPA](https://doi.or
 
 
 #### Variations
-- **W25** : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://github.com/jiarong-wu/mlflux).
+- **W25** : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://doi.org/10.48550/arXiv.2503.03990).
 
 ## Requirements
 
@@ -21,8 +21,8 @@ Purpose of this experiment is to perform the 1D column [C1D_PAPA](https://doi.or
 
 ### Python
 
-- Eophis version : [v1.0.1](https://github.com/alexis-barge/eophis/tree/v1.0.1)
-- **W25** dependencies:
+- Eophis version : [v1.1.0](https://github.com/alexis-barge/eophis/tree/v1.1.0)
+- **[W25](https://github.com/jiarong-wu/mlflux)** dependencies:
   ```bash
   cd C1D_PAPA32_AirSeaFLuxes.W25/INFERENCES/W25ANN
   pip install -e .
