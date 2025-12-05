@@ -19,7 +19,6 @@ from mlflux.ann_case import open_case
 # ============================= #
 weight_path = '/lustre/fswork/projects/rech/rkm/udp79td/local_libs/morays/NEMO-C1D_PAPA32_AirSeaFluxes/C1D_PAPA32_AirSeaFluxes.W25/INFERENCES/weights'
 
-
 # ++++++++++++++++++++++++++++ #
 #            Utils             #
 # ++++++++++++++++++++++++++++ #
@@ -53,24 +52,25 @@ else:
 # Load model
 net = load_model(weight_path)
 
+# save previous time step
+tau0, Qs0, Ql0 = None, None, None
+
+def stoch_process(x0,xstd,alpha=0.99):
+    """ Generate time-correlated random flucutation from given standard deviation. alpha = 1-dt/T with dt=0.5 hrs and T=50 hrs by default"""
+    if x0 == None:
+        x0 = np.random.normal(loc=0,scale=xstd)
+    return alpha*x0 + (1-alpha**2)**0.5 * np.random.normal(loc=0,scale=xstd)
+
 
 def W25ann(ux,uy,To,Ta,p,q):
     """ Compute air-sea momentum and heat fluxes from Wu et al. (2025) ANN """
     if Is_None(ux,uy,To,Ta,p,q):
         return None, None, None, None
     else:
-        global net
+        global net, tau0, Qs0, Ql0
         M, SH, LH = net
 
-        # 3D to 1D
-        ux = ux.reshape(1)
-        uy = uy.reshape(1)
-        To = To.reshape(1)
-        Ta = Ta.reshape(1)
-        p = p.reshape(1)
-        q = q.reshape(1)
-
-        # useful variables
+        # wind speed - rh
         U = (ux**2 + uy**2)**0.5
         cos = ux/U
         sin = uy/U
@@ -82,19 +82,22 @@ def W25ann(ux,uy,To,Ta,p,q):
         X = torch.tensor(X)
 
         # Predict fluxes
-        M_mean = M.pred_mean(X)
-        M_std = M.pred_var(X) ** 0.5
-        SH_mean = SH.pred_mean(X)
-        SH_std = SH.pred_var(X) ** 0.5
-        LH_mean = LH.pred_mean(X)
-        LH_std = LH.pred_var(X) ** 0.5
+        M_mean = M.pred_mean(X).detach().numpy().squeeze()
+        M_std = M.pred_var(X).detach().numpy().squeeze() ** 0.5
+        SH_mean = SH.pred_mean(X).detach().numpy().squeeze()
+        SH_std = SH.pred_var(X).detach().numpy().squeeze() ** 0.5
+        LH_mean = LH.pred_mean(X).detach().numpy().squeeze()
+        LH_std = LH.pred_var(X).detach().numpy().squeeze() ** 0.5
 
-        # Format outputs
-        taux = M_mean.detach().numpy().squeeze().reshape(1,1,1) * cos
-        tauy = M_mean.detach().numpy().squeeze().reshape(1,1,1) * sin
-        Qs = SH_mean.detach().numpy().squeeze().reshape(1,1,1)
-        Ql = LH_mean.detach().numpy().squeeze().reshape(1,1,1)
-        return taux, tauy, Qs, Ql
+        # Stochastic fluctuations
+        tau0 = stoch_process(tau0,M_std)
+        taux, tauy = (M_mean + tau0)*cos.ravel() , (M_mean + tau0)*sin.ravel()
+        Qs0 = stoch_process(Qs0,SH_std)
+        Qs = SH_mean + Qs0
+        Ql0 = stoch_process(Ql0,LH_std)
+        Ql = LH_mean + Ql0
+
+        return taux.reshape(ux.shape), tauy.reshape(ux.shape), Qs.reshape(ux.shape), Ql.reshape(ux.shape)
 
 
 if __name__ == '__main__' :
@@ -114,3 +117,4 @@ if __name__ == '__main__' :
     taux, tauy, Qs, Ql = W25ann(ux, uy, To, Ta, p, q)
     print(f'Res    -- taux: {taux}, tauy: {tauy}, Qlatent: {Ql}, Qsensible: {Qs}')
     print(f'Test successful')
+    W25ann(ux*2, uy*2, To*2, Ta*2, p*2, q*2)
