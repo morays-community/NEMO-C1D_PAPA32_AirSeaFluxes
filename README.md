@@ -4,11 +4,11 @@
 
 ## Context and Motivation
 
-Purpose of this experiment is to perform the 1D column [C1D_PAPA](https://doi.org/10.5194/gmd-8-69-2015) NEMO test case with different parameterizations to compute momentum and heat air-sea fluxes. Here, we use a slightly modified version of the reference case in which the vertical grid is regurlaly discretized on 32 depth levels over 200m. Results are written in an output file with the NEMO output system (XIOS).
+Purpose of this experiment is to perform the 1D column [C1D_PAPA](https://doi.org/10.5194/gmd-8-69-2015) NEMO test case with different parameterizations to compute momentum and heat air-sea fluxes. Here, we use a slightly modified version of the reference case in which the vertical grid is regurlaly discretized on 32 depth levels over 200m. Results are written in an output file with the NEMO output system (XIOS). 
 
 
 #### Variations
-- **W25** : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://doi.org/10.48550/arXiv.2503.03990).
+- **W25** : Air-sea momentum and heat fluxes computed with Artifical Neural Network proposed by [Wu et al. 2025](https://doi.org/10.48550/arXiv.2503.03990). `RES` directory also contains comparison with standard bulk formulas.
 
 ## Requirements
 

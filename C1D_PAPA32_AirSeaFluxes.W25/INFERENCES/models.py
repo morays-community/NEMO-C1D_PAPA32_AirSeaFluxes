@@ -117,4 +117,3 @@ if __name__ == '__main__' :
     taux, tauy, Qs, Ql = W25ann(ux, uy, To, Ta, p, q)
     print(f'Res    -- taux: {taux}, tauy: {tauy}, Qlatent: {Ql}, Qsensible: {Qs}')
     print(f'Test successful')
-    W25ann(ux*2, uy*2, To*2, Ta*2, p*2, q*2)
