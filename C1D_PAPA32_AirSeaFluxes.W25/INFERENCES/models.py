@@ -56,7 +56,7 @@ net = load_model(weight_path)
 tau0, Qs0, Ql0 = None, None, None
 
 def stoch_process(x0,xstd,alpha=0.99):
-    """ Generate time-correlated random flucutation from given standard deviation. alpha = 1-dt/T with dt=0.5 hrs and T=50 hrs by default"""
+    """ Generate time-correlated random flucutation from given standard deviation. alpha = 1-dt/T with dt=0.5 hrs and T=60 hrs by default"""
     if x0 == None:
         x0 = np.random.normal(loc=0,scale=xstd)
     return alpha*x0 + (1-alpha**2)**0.5 * np.random.normal(loc=0,scale=xstd)
@@ -90,7 +90,7 @@ def W25ann(ux,uy,To,Ta,p,q):
         LH_std = LH.pred_var(X).detach().numpy().squeeze() ** 0.5
 
         # Stochastic fluctuations
-        tau0 = stoch_process(tau0,M_std)
+        tau0 = stoch_process(tau0,M_std,alpha=0.972)
         taux, tauy = (M_mean + tau0)*cos.ravel() , (M_mean + tau0)*sin.ravel()
         Qs0 = stoch_process(Qs0,SH_std)
         Qs = SH_mean + Qs0

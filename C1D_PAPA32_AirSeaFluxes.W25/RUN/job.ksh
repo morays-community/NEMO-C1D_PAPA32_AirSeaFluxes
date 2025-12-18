@@ -2,7 +2,7 @@
 
 ###################################
 ## Definitions for batch system
-#SBATCH -A cli@cpu                      # Accounting information
+#SBATCH -A rkm@cpu                      # Accounting information
 #SBATCH --job-name=C1D_PAPA_W25ANN      # Job name
 #SBATCH --partition=cpu_p1              # Partition Name
 #SBATCH --ntasks=2                      # Total number of MPI processes
@@ -41,8 +41,10 @@ cd ${CONFIG_DIR}
 ## Create execution directory and move there
 XXD=`date +%F%H%M%S`
 echo " XXD " $XXD
-mkdir -p $CONFIG_DIR/OUT/CPLTESTCASE/$XXD
-cd $CONFIG_DIR/OUT/CPLTESTCASE/$XXD
+#mkdir -p $CONFIG_DIR/OUT/$XXD
+#cd $CONFIG_DIR/OUT/$XXD
+mkdir -p $CONFIG_DIR/OUT/W25
+cd $CONFIG_DIR/OUT/W25
 echo "RUN directory " `pwd`
 
 ## Get input files for NEMO
